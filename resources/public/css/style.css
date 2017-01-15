@@ -1,0 +1,21 @@
+/* some style */
+
+table.char {
+    border-collapse: collapse;
+    border: 1px solid;
+}
+
+td.char-pixel {
+    width: 10px;
+    height: 10px;
+    border: solid 1px;
+    float: left;
+}
+
+.pixel-on {
+    background: black;
+}
+
+tr.char-line {
+    border-collapse: collapse;
+}
