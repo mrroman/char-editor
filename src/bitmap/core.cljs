@@ -23,14 +23,27 @@
      [:tr.char-line
       {:key i}
       (for [j (range 8)]
-        [:td.char-pixel {:className (char-class (get ch i) j)
-                         :key j
-                         :onClick #(swap! app-state update :char set-pixel i j)}])])])
+        [:td {:className (char-class (get ch i) (- 7 j))
+              :key j
+              :onClick #(swap! app-state update :char set-pixel i (- 7 j))}])])])
+
+(defn data-line [ch]
+  [:pre
+    (str "DATA " (clojure.string/join "," ch))])
+
+(defn inverse [ch]
+  (into [] (map #(bit-xor % 255) ch)))
+
+(defn clear [ch]
+  [0 0 0 0 0 0 0 0])
 
 (defn hello-world []
   [:div
     [:h1 (:text @app-state)]
-    [char-table (:char @app-state)]])
+    [char-table (:char @app-state)]
+    [data-line (:char @app-state)]
+    [:button {:onClick #(swap! app-state update :char inverse)} "Inverse"]
+    [:button {:onClick #(swap! app-state update :char clear)} "Clear"]])
 
 (reagent/render-component [hello-world]
                           (. js/document (getElementById "app")))
